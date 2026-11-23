@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 850px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+
+        .add {
+            background: green;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+
+        .edit {
+            background: orange;
+            color: white;
+            padding: 7px;
+            text-decoration: none;
+        }
+
+        .delete {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Student Management System</h1>
+
+    <a href="/add" class="add">Add Student</a>
+
+    <br><br>
+
+    <form action="/" method="GET">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search student"
+            value="{{ search }}"
+        >
+
+        <button type="submit" style="background:blue">
+            Search
+        </button>
+
+        <a href="/">Show All</a>
+
+    </form>
+
+    <h3>Total Students: {{ students|length }}</h3>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Course</th>
+            <th>Action</th>
+        </tr>
+
+        {% for student in students %}
+
+        <tr>
+
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.course }}</td>
+
+            <td>
+
+                <a href="/edit/{{ student.id }}"
+                   class="edit">
+                    Edit
+                </a>
+
+                <form
+                    action="/delete/{{ student.id }}"
+                    method="POST"
+                    style="display:inline"
+                    onsubmit="return confirm('Delete this student?')"
+                >
+                    <button class="delete" type="submit">
+                        Delete
+                    </button>
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% else %}
+
+        <tr>
+            <td colspan="5">No Students Found</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
